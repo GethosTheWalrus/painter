@@ -58,7 +58,7 @@ void Parse(list_token tokens) {
     // }
 
     int valid = 0;
-    if( program(current) ) {
+    if( program(current) == 1 ) {
 
         printf("Your program has been successfully validated!");
 
@@ -69,52 +69,58 @@ void Parse(list_token tokens) {
 int program(node_token *current) {
 
     // There are no more tokens to parse
-    if( current == 0 ) {
+    if( current == NULL ) {
 
         return 1;
 
     }
 
     // Validate that we are given a statement
-    if( !statement(&current) ) {
+    printf("above statement function call\n");
+    if( statement(&current) == 0 ) {
 
         printf("There is an error in your program on line %d character number %d token number %d:\nUnexpected %s encountered: %s", current->line_num, current->char_num, current->token_num, current->token_type, current->token_value);
         return 0;
 
     }
 
+    printf("below statement function call\n");
+
     // If we encounter a newline after a statement, check for another statement
-    if( newline(&current) ) {
+    if( newline(&current) == 1 ) {
 
         return program(current);
 
     }
 
+    return 1;
+
 }
 
 int statement(node_token **current) {
 
-    if( !draw_command(&current) ) {
+    if( draw_command(&current) == 0 ) {
 
         // printf("not a draw_command\n");
         return 0;
 
     }
 
-    if( !function(&current) ) {
+    if( function(&current) == 0 ) {
 
         // printf("not a function\n");
         return 0;
 
     }
 
-    if( !location(&current) ) {
+    if( location(&current) == 0 ) {
 
         // printf("not a location\n");
         return 0;
 
     }
 
+    printf("inside statement function return 1\n");
     return 1;
 
 }
@@ -140,14 +146,14 @@ int newline(node_token **current) {
 
 int draw_command(node_token ***current) {
 
-    if( !instruction(&current) ) {
+    if( instruction(&current) == 0 ) {
 
         // printf("not a instruction\n");
         return 0;
 
     }
 
-    if( !object(&current) ) {
+    if( object(&current) == 0 ) {
 
         // printf("not a object\n");
         return 0;
@@ -222,63 +228,63 @@ int function(node_token ***current) {
 
 int location(node_token ***current) {
     
-    if( !container_left(&current) ) {
+    if( container_left(&current) == 0 ) {
 
         // printf("not a container_right\n");
         return 0;
 
     }
 
-    if( !coord_val(&current) ) {
+    if( coord_val(&current) == 0 ) {
 
         // printf("not a coord_val\n");
         return 0;
 
     }
 
-    if( !separator(&current) ) {
+    if( separator(&current) == 0 ) {
 
         // printf("not a separator\n");
         return 0;
 
     }
 
-    if( !coord_val(&current) ) {
+    if( coord_val(&current) == 0 ) {
 
         // printf("not a coord_val\n");
         return 0;
 
     }
 
-    if( !separator(&current) ) {
+    if( separator(&current) == 0 ) {
 
         // printf("not a separator\n");
         return 0;
 
     }
 
-    if( !dim_val(&current) ) {
+    if( dim_val(&current) == 0 ) {
 
         // printf("not a dim_val\n");
         return 0;
 
     }
 
-    if( !separator(&current) ) {
+    if( separator(&current) == 0 ) {
 
         // printf("not a separator\n");
         return 0;
 
     }
 
-    if( !dim_val(&current) ) {
+    if( dim_val(&current) == 0 ) {
 
         // printf("not a dim_val\n");
         return 0;
 
     }
 
-    if( !container_right(&current) ) {
+    if( container_right(&current) == 0 ) {
 
         // printf("not a container_right\n");
         return 0;
@@ -331,21 +337,21 @@ int container_right(node_token ****current) {
 
 int coord_val(node_token ****current) {
 
-    if( !coordinate(&current) ) {
+    if( coordinate(&current) == 0 ) {
 
         // printf("not a coordinate\n");
         return 0;
 
     }
 
-    if( !assigner(&current) ) {
+    if( assigner(&current) == 0 ) {
 
         // printf("not a assigner\n");
         return 0;
 
     }
 
-    if( !number(&current) ) {
+    if( number(&current) == 0 ) {
 
         // printf("not a number\n");
         return 0;
@@ -358,21 +364,21 @@ int coord_val(node_token ****current) {
 
 int dim_val(node_token ****current) {
 
-    if( !dimension(&current) ) {
+    if( dimension(&current) == 0 ) {
 
         // printf("not a dimension\n");
         return 0;
 
     }
 
-    if( !assigner(&current) ) {
+    if( assigner(&current) == 0 ) {
 
         // printf("not a assigner\n");
         return 0;
 
     }
 
-    if( !number(&current) ) {
+    if( number(&current) == 0 ) {
 
         // printf("not a number\n");
         return 0;

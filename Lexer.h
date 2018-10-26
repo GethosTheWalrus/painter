@@ -30,28 +30,32 @@ list_token Lex(char *stream) {
             line_num += 1;
             char_num = 0;
 
-            token_type = "newline";
+            strcpy(token_type, "newline");
+            // token_type = "newline";
             token_value[0] = stream[i];
             token_value[1] = '\0';
 
         // spaces are a token
         } else if( stream[i] == ' ' ) {
 
-            token_type = "space";
+            strcpy(token_type, "space");
+            // token_type = "space";
             token_value[0] = stream[i];
             token_value[1] = '\0';
 
         // operators are a token = : + - * /
-        } else if( stream[i] == '=' || stream[i] == ':' || stream[i] == '+' || stream[i] == '-' || stream[i] == '*' || stream[i] == '/') {
+        } else if( stream[i] == '=' || stream[i] == ':' || stream[i] == '+' || stream[i] == '-' || stream[i] == '*' || stream[i] == '/' ) {
 
-            token_type = "operator";
+            strcpy(token_type, "operator");
+            // token_type = "operator";
             token_value[0] = stream[i];
             token_value[1] = '\0';
 
         // separators are a token ( ) ,
         } else if( stream[i] == ')' || stream[i] == '(' || stream[i] == ',') {
 
-            token_type = "separator";
+            strcpy(token_type, "separator");
+            // token_type = "separator";
             token_value[0] = stream[i];
             token_value[1] = '\0';
 
@@ -64,7 +68,8 @@ list_token Lex(char *stream) {
             for( int current_token_count = 0; isalpha(stream[i]); current_token_count++ ) {
 
                 was_a_word = 1;
-                token_type = "word";
+                strcpy(token_type, "word");
+                // token_type = "word";
                 current_token[current_token_count] = stream[i];
                 current_token_tracker += 1;
                 i += 1;
@@ -74,7 +79,8 @@ list_token Lex(char *stream) {
             // build the next token_value out of the string of consecutive numeric characters
             for( int current_token_count = 0; was_a_word != 1 && isdigit(stream[i]); current_token_count++ ) {
 
-                token_type = "number";
+                strcpy(token_type, "number");
+                // token_type = "number";
                 current_token[current_token_count] = stream[i];
                 current_token_tracker += 1;
                 i += 1;
@@ -94,7 +100,8 @@ list_token Lex(char *stream) {
             for( int current_token_count = 0; stream[i] != ' ' && stream[i] != '\0'; current_token_count++ ) {
 
                 // printf("%c\n", stream[i]);
-                token_type = "unknown";
+                strcpy(token_type, "unknown");
+                // token_type = "unknown";
                 current_token[current_token_count] = stream[i];
                 current_token_tracker += 1;
                 i += 1;
@@ -109,7 +116,7 @@ list_token Lex(char *stream) {
         }
 
         // check if any word tokens are special tokens
-        if( token_type == "word" ) {
+        if( strcmp(token_type, "word") == 0 ) {
 
             if( strcmp(token_value, "paint") == 0 ) {
 
@@ -134,7 +141,7 @@ list_token Lex(char *stream) {
             }
 
         // check if any operator tokens are assignment operators
-        } else if( token_type == "operator" ) {
+        } else if( strcmp(token_type, "operator") == 0 ) {
 
             if( strcmp(token_value, "=") == 0 ) {
 
@@ -143,7 +150,7 @@ list_token Lex(char *stream) {
             }
 
         // check if any separators are containers
-        } else if( token_type == "separator" ) {
+        } else if( strcmp(token_type, "separator") == 0 ) {
 
             if( strcmp(token_value, "(") == 0 ) {
 
@@ -157,6 +164,7 @@ list_token Lex(char *stream) {
 
         } 
 
+        // printf("{number: %d\ttype: %s\tvalue: %s\tline: %d\tchar: %d}\n", token_num, token_type, token_value, line_num, char_num);
 
         // add the token to the list of tokens
         if( strcmp(token_type, "space") != 0 ) {
@@ -172,9 +180,9 @@ list_token Lex(char *stream) {
         token_num += 1;
 
         // free all reserved memory for this iteration
-        free(token_type);
-        free(token_value);
-        free(current_token);
+        // free(token_type);
+        // free(token_value);
+        // free(current_token);
 
     }
 
