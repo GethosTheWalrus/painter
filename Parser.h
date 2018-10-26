@@ -1,5 +1,6 @@
 int program(node_token *current);
 int statement(node_token **current);
+int newline(node_token **current);
 int draw_command(node_token ***current);
 int function(node_token ***current);
 int location(node_token ***current);
@@ -48,17 +49,18 @@ void Parse(list_token tokens) {
     printf("Validating your program containing %d instructions...\n", tokens.length);
 
     node_token *current = tokens.head;
-    while( current != NULL ) {
+    // while( current != NULL ) {
 
-        printf("{number: %d\ttype: %s\tvalue: %s\tline: %d\tchar: %d}\n", current->token_num, current->token_type, current->token_value, current->line_num, current->char_num);
+    //     printf("{number: %d\ttype: %s\tvalue: %s\tline: %d\tchar: %d}\n", current->token_num, current->token_type, current->token_value, current->line_num, current->char_num);
 
-        current = current->next;
+    //     current = current->next;
 
-    }
+    // }
 
+    int valid = 0;
     if( program(current) ) {
 
-        printf("Your program has been successfully validated!\n");
+        printf("Your program has been successfully validated!");
 
     }
 
@@ -66,16 +68,27 @@ void Parse(list_token tokens) {
 
 int program(node_token *current) {
 
+    // There are no more tokens to parse
+    if( current == 0 ) {
+
+        return 1;
+
+    }
+
+    // Validate that we are given a statement
     if( !statement(&current) ) {
 
-        printf("There is an error in your on line %d character number %d:\nUnexpected %s encountered: %s", current->line_num, current->char_num, current->token_type, current->token_value);
+        printf("There is an error in your program on line %d character number %d token number %d:\nUnexpected %s encountered: %s", current->line_num, current->char_num, current->token_num, current->token_type, current->token_value);
         return 0;
 
     }
 
-    // printf("%d\n", current->token_num);
+    // If we encounter a newline after a statement, check for another statement
+    if( newline(&current) ) {
 
-    return 1;
+        return program(current);
+
+    }
 
 }
 
@@ -83,22 +96,43 @@ int statement(node_token **current) {
 
     if( !draw_command(&current) ) {
 
-        // printf("not a statement\n");
+        // printf("not a draw_command\n");
         return 0;
 
     }
 
     if( !function(&current) ) {
 
+        // printf("not a function\n");
         return 0;
 
     }
 
     if( !location(&current) ) {
 
+        // printf("not a location\n");
         return 0;
 
     }
+
+    return 1;
+
+}
+
+int newline(node_token **current) {
+
+    // set a temporary value equal to the value referenced by the double pointer
+    node_token *current_node_value = *current;
+    
+    if( strcmp(current_node_value->token_type, "newline") != 0 ) {
+
+        // printf("token %d is a %s\n", current_node_value->token_num, current_node_value->token_type);
+        return 0;
+
+    }
+
+    // set the value of the current node equal to the next node (referencing the double pointer)
+    *current = current_node_value->next;
 
     return 1;
 

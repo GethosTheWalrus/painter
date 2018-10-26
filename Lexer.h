@@ -9,7 +9,7 @@ list_token Lex(char *stream) {
     };
     
     // initializing the token number, line number, and character number (per line)
-    int char_num = 1;
+    int char_num = 0;
     int line_num = 1;
     int token_num = 1;
 
@@ -28,7 +28,7 @@ list_token Lex(char *stream) {
 
             // new line, so increment line_num and reset char_num
             line_num += 1;
-            char_num = 1;
+            char_num = 0;
 
             token_type = "newline";
             token_value[0] = stream[i];
