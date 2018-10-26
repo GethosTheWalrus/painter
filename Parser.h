@@ -76,7 +76,6 @@ int program(node_token *current) {
     }
 
     // Validate that we are given a statement
-    printf("above statement function call\n");
     if( statement(&current) == 0 ) {
 
         printf("There is an error in your program on line %d character number %d token number %d:\nUnexpected %s encountered: %s", current->line_num, current->char_num, current->token_num, current->token_type, current->token_value);
@@ -84,7 +83,6 @@ int program(node_token *current) {
 
     }
 
-    printf("below statement function call\n");
 
     // If we encounter a newline after a statement, check for another statement
     if( newline(&current) == 1 ) {
@@ -120,7 +118,6 @@ int statement(node_token **current) {
 
     }
 
-    printf("inside statement function return 1\n");
     return 1;
 
 }
@@ -129,10 +126,17 @@ int newline(node_token **current) {
 
     // set a temporary value equal to the value referenced by the double pointer
     node_token *current_node_value = *current;
+
+    // return if the current node value is null
+    if( current_node_value == 0 ) {
+
+        return 0;
+
+    }
     
     if( strcmp(current_node_value->token_type, "newline") != 0 ) {
 
-        // printf("token %d is a %s\n", current_node_value->token_num, current_node_value->token_type);
+        printf("token %d is a %s\n", current_node_value->token_num, current_node_value->token_type);
         return 0;
 
     }
