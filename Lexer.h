@@ -145,9 +145,13 @@ list_token Lex(char *stream) {
         // check if any separators are containers
         } else if( token_type == "separator" ) {
 
-            if( strcmp(token_value, "(") == 0 || strcmp(token_value, ")") == 0 ) {
+            if( strcmp(token_value, "(") == 0 ) {
 
-                token_type = "container";
+                token_type = "container_left";
+
+            } else if( strcmp(token_value, ")") == 0 ) {
+
+                token_type = "container_right";
 
             }
 

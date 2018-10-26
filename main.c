@@ -11,7 +11,7 @@
 int main() {
 
     // define a test program
-    char *program = "paint rectangle at (x=10, y=10, width=20, height=20)\n";
+    char *program = "paint rectangle at (x=10 y=10, width=20, height=20)\n";
 
     // lexically analyze the source code
     list_token tokens = Lex(program);
