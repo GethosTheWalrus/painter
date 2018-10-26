@@ -48,13 +48,13 @@ void Parse(list_token tokens) {
     printf("Validating your program containing %d instructions...\n", tokens.length);
 
     node_token *current = tokens.head;
-    // while( current != NULL ) {
+    while( current != NULL ) {
 
-    //     printf("{number: %d\ttype: %s\tvalue: %s\tline: %d\tchar: %d}\n", current->token_num, current->token_type, current->token_value, current->line_num, current->char_num);
+        printf("{number: %d\ttype: %s\tvalue: %s\tline: %d\tchar: %d}\n", current->token_num, current->token_type, current->token_value, current->line_num, current->char_num);
 
-    //     current = current->next;
+        current = current->next;
 
-    // }
+    }
 
     if( program(current) ) {
 

@@ -155,16 +155,15 @@ list_token Lex(char *stream) {
 
             }
 
-        // omit spaces from the list of tokens
-        } else if( token_type == "space" ) {
-
-            continue;
-
-        }
+        } 
 
 
         // add the token to the list of tokens
-        push(&tokens, token_type, token_value, line_num, char_num, token_num);
+        if( strcmp(token_type, "space") != 0 ) {
+
+            push(&tokens, token_type, token_value, line_num, char_num, token_num);
+
+        }
 
         // increment the character number by the length of token_value
         char_num += strlen(token_value);
