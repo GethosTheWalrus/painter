@@ -41,6 +41,6 @@ void push(list_token *l, char *token_type, char *token_value, int line_num, int 
     n->token_num = token_num;
     l->length += 1;
 
-    free(n);
+    // free(n);
 
 }
